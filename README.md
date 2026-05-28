@@ -362,10 +362,39 @@ Ver URL:
 cat /home/ubuntu/cloudflared.log
 ```
 
+Verificar que el tunel responde:
+
+```bash
+curl https://URL_GENERADA.trycloudflare.com/health
+```
+
 La URL tendra forma:
 
 ```text
 https://algo-algo-algo.trycloudflare.com
+```
+
+Si no se tiene acceso SSH a la instancia, se puede levantar el tunel desde Windows apuntando a la IP publica de AWS:
+
+```powershell
+$toolsDir = Join-Path (Resolve-Path .).Path ".codex-tools"
+New-Item -ItemType Directory -Force -Path $toolsDir | Out-Null
+$exe = Join-Path $toolsDir "cloudflared.exe"
+Invoke-WebRequest -Uri "https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-windows-amd64.exe" -OutFile $exe
+& $exe tunnel --url http://34.230.181.169:8080 --no-autoupdate
+```
+
+En otra terminal, o leyendo la salida del proceso, copiar la URL que aparece en el bloque:
+
+```text
+Your quick Tunnel has been created! Visit it at:
+https://xxxxx.trycloudflare.com
+```
+
+Para verificarla desde Windows:
+
+```powershell
+Invoke-WebRequest -Uri "https://xxxxx.trycloudflare.com/health" -UseBasicParsing
 ```
 
 Importante: esta URL no es fija. Cambia si se reinicia el tunel o la instancia. Para una URL estable con HTTPS se recomienda dominio propio con Cloudflare Tunnel nombrado, Caddy o Nginx con certificado SSL.
