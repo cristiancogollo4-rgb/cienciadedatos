@@ -1,0 +1,191 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2000" height="1250" viewBox="0 0 2000 1250">
+  <defs>
+    <pattern id="minorGrid" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M20 0H0V20" fill="none" stroke="#235f9d" stroke-width="1"/>
+    </pattern>
+    <pattern id="majorGrid" width="100" height="100" patternUnits="userSpaceOnUse">
+      <rect width="100" height="100" fill="url(#minorGrid)"/>
+      <path d="M100 0H0V100" fill="none" stroke="#61a8de" stroke-width="1.5"/>
+    </pattern>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="5" refY="5" orient="auto-start-reverse">
+      <path d="M0 0L10 5L0 10Z" fill="#ffffff"/>
+    </marker>
+    <style>
+      .bg{fill:#0b376d}
+      .grid{fill:url(#majorGrid);opacity:.95}
+      .title{fill:#fff;font:700 44px Arial,Helvetica,sans-serif;letter-spacing:0}
+      .subtitle{fill:#d9efff;font:23px Arial,Helvetica,sans-serif;letter-spacing:0}
+      .label{fill:#fff;font:700 25px Arial,Helvetica,sans-serif;letter-spacing:0}
+      .text{fill:#fff;font:20px Arial,Helvetica,sans-serif;letter-spacing:0}
+      .small{fill:#fff;font:17px Arial,Helvetica,sans-serif;letter-spacing:0}
+      .tiny{fill:#e8f6ff;font:15px Arial,Helvetica,sans-serif;letter-spacing:0}
+      .part{fill:rgba(255,255,255,.1);stroke:#fff;stroke-width:3;stroke-linejoin:round}
+      .ghost{fill:rgba(255,255,255,.04);stroke:#fff;stroke-width:2;stroke-dasharray:10 8}
+      .line{fill:none;stroke:#fff;stroke-width:3;stroke-linejoin:round;stroke-linecap:round}
+      .thin{fill:none;stroke:#fff;stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+      .dash{fill:none;stroke:#fff;stroke-width:2;stroke-dasharray:12 9}
+      .dim{fill:none;stroke:#fff;stroke-width:2;marker-start:url(#arrow);marker-end:url(#arrow)}
+      .cut{fill:rgba(255,255,255,.18);stroke:#fff;stroke-width:3;stroke-linejoin:round}
+      .servo{fill:rgba(255,255,255,.16);stroke:#fff;stroke-width:3}
+    </style>
+  </defs>
+
+  <rect class="bg" width="2000" height="1250"/>
+  <rect class="grid" width="2000" height="1250"/>
+
+  <text class="title" x="55" y="68">Blueprint realista del prototipo IoT clasificador de semillas</text>
+  <text class="subtitle" x="55" y="105">Basado en las fotos recibidas: dos niveles, carga manual, disco dosificador superior, servo MG90S y camara cenital.</text>
+
+  <!-- Upper top view -->
+  <g transform="translate(70,170)">
+    <text class="label" x="0" y="-30">A. Vista superior real: primer nivel dosificador</text>
+    <rect class="part" x="0" y="0" width="520" height="520"/>
+    <circle class="line" cx="260" cy="260" r="208"/>
+    <circle class="dash" cx="260" cy="260" r="178"/>
+    <circle class="part" cx="260" cy="260" r="18"/>
+    <rect class="part" x="248" y="90" width="24" height="195" transform="rotate(78 260 260)"/>
+    <rect class="ghost" x="225" y="235" width="70" height="58"/>
+    <path class="cut" d="M420 226L520 202V318L420 294Z"/>
+    <path class="thin" d="M260 260L463 260"/>
+    <path class="thin" d="M52 260H10"/>
+    <path class="thin" d="M260 52V12"/>
+    <path class="thin" d="M468 260H510"/>
+    <path class="thin" d="M260 468V510"/>
+    <text class="text" x="128" y="34">Base cuadrada real 220 x 220 mm</text>
+    <text class="text" x="116" y="488">Pared circular de carton/MDF flexible</text>
+    <text class="small" x="303" y="246">Paleta</text>
+    <text class="small" x="304" y="269">empujadora</text>
+    <text class="small" x="304" y="295">unida al eje</text>
+    <text class="small" x="344" y="211">Abertura</text>
+    <text class="small" x="344" y="233">de salida</text>
+    <text class="small" x="219" y="225">Soporte</text>
+    <text class="small" x="215" y="247">central</text>
+    <line class="dim" x1="0" y1="550" x2="520" y2="550"/>
+    <text class="text" x="210" y="585">220 mm</text>
+    <line class="dim" x1="-32" y1="0" x2="-32" y2="520"/>
+    <text class="text" x="-80" y="288" transform="rotate(-90 -80 288)">220 mm</text>
+    <line class="dim" x1="52" y1="35" x2="468" y2="35"/>
+    <text class="small" x="213" y="25">D aprox. 175-190 mm</text>
+  </g>
+
+  <!-- Side cutaway -->
+  <g transform="translate(675,170)">
+    <text class="label" x="0" y="-30">B. Corte lateral real: discos apilados</text>
+    <rect class="part" x="90" y="65" width="540" height="22"/>
+    <path class="part" d="M132 65C150 8 570 8 590 65V147H132Z"/>
+    <rect class="part" x="125" y="145" width="470" height="18"/>
+    <line class="line" x1="145" y1="163" x2="145" y2="410"/>
+    <line class="line" x1="585" y1="163" x2="585" y2="410"/>
+    <line class="line" x1="235" y1="163" x2="235" y2="410"/>
+    <line class="line" x1="505" y1="163" x2="505" y2="410"/>
+    <rect class="servo" x="318" y="168" width="96" height="45" rx="4"/>
+    <rect class="servo" x="344" y="213" width="44" height="24" rx="3"/>
+    <line class="line" x1="366" y1="52" x2="366" y2="168"/>
+    <rect class="part" x="252" y="50" width="230" height="14" transform="rotate(2 366 57)"/>
+    <path class="cut" d="M312 148H420L402 190H334Z"/>
+    <line class="dim" x1="366" y1="190" x2="366" y2="255"/>
+    <rect class="part" x="112" y="410" width="505" height="22"/>
+    <path class="part" d="M150 312C170 253 560 253 580 312V410H150Z"/>
+    <line class="line" x1="365" y1="300" x2="365" y2="410"/>
+    <line class="line" x1="250" y1="330" x2="480" y2="392"/>
+    <line class="line" x1="480" y1="330" x2="250" y2="392"/>
+    <rect class="servo" x="322" y="434" width="88" height="40" rx="4"/>
+    <rect class="servo" x="346" y="474" width="40" height="23" rx="3"/>
+    <rect class="part" x="80" y="500" width="565" height="24"/>
+    <text class="text" x="154" y="36">Primer nivel: disco alto dosificador</text>
+    <text class="small" x="426" y="132">Pared alta lisa</text>
+    <text class="small" x="206" y="129">Abertura inferior</text>
+    <text class="small" x="430" y="232">Caida vertical</text>
+    <text class="small" x="430" y="255">directa al selector</text>
+    <line class="thin" x1="420" y1="238" x2="370" y2="224"/>
+    <text class="small" x="258" y="292">Segundo nivel: disco bajo</text>
+    <text class="small" x="258" y="315">con compartimientos</text>
+    <text class="small" x="278" y="536">Base inferior sobre mesa</text>
+    <text class="small" x="420" y="462">Servo inferior</text>
+    <text class="small" x="420" y="485">debajo del plato</text>
+    <text class="small" x="420" y="197">MG90S superior</text>
+    <line class="dim" x1="45" y1="65" x2="45" y2="163"/>
+    <text class="tiny" x="-1" y="126" transform="rotate(-90 -1 126)">35-45 mm</text>
+    <line class="dim" x1="650" y1="163" x2="650" y2="410"/>
+    <text class="small" x="665" y="292">130-160 mm</text>
+    <line class="dim" x1="90" y1="552" x2="630" y2="552"/>
+    <text class="small" x="292" y="585">220 mm placa superior</text>
+  </g>
+
+  <!-- Underside servo detail -->
+  <g transform="translate(70,835)">
+    <text class="label" x="0" y="-28">C. Detalle inferior del primer nivel</text>
+    <rect class="part" x="0" y="0" width="500" height="285"/>
+    <circle class="ghost" cx="250" cy="142" r="105"/>
+    <rect class="servo" x="190" y="110" width="120" height="62" rx="5"/>
+    <rect class="servo" x="165" y="124" width="25" height="34" rx="3"/>
+    <rect class="servo" x="310" y="124" width="25" height="34" rx="3"/>
+    <circle class="part" cx="250" cy="141" r="16"/>
+    <line class="thin" x1="250" y1="141" x2="250" y2="48"/>
+    <rect class="part" x="208" y="35" width="84" height="18"/>
+    <line class="thin" x1="190" y1="202" x2="120" y2="245"/>
+    <line class="thin" x1="310" y1="202" x2="390" y2="245"/>
+    <text class="text" x="166" y="95">Servo MG90S</text>
+    <text class="small" x="130" y="267">Cableado hacia Arduino</text>
+    <text class="small" x="285" y="45">Eje a la paleta</text>
+    <text class="tiny" x="25" y="28">Recomendado: tornillos M2/M3 y placa de refuerzo alrededor del servo.</text>
+  </g>
+
+  <!-- Lower selector top view -->
+  <g transform="translate(635,835)">
+    <text class="label" x="0" y="-28">D. Vista superior del segundo nivel</text>
+    <rect class="part" x="0" y="0" width="500" height="285"/>
+    <circle class="line" cx="250" cy="142" r="118"/>
+    <line class="line" x1="250" y1="24" x2="250" y2="260"/>
+    <line class="line" x1="132" y1="142" x2="368" y2="142"/>
+    <circle class="part" cx="250" cy="142" r="14"/>
+    <path class="cut" d="M214 0H286L274 48H226Z"/>
+    <path class="cut" d="M218 238H282L300 285H200Z"/>
+    <text class="small" x="205" y="82">arroz</text>
+    <text class="small" x="305" y="148">frijol</text>
+    <text class="small" x="185" y="218">maiz_pira</text>
+    <text class="small" x="88" y="148">arbejas</text>
+    <text class="tiny" x="193" y="18">Entrada desde arriba</text>
+    <text class="tiny" x="184" y="275">Salida inferior a recipiente</text>
+    <text class="tiny" x="142" y="108">Diferente al superior: tiene divisiones internas</text>
+  </g>
+
+  <!-- Camera and electronics -->
+  <g transform="translate(1280,835)">
+    <text class="label" x="0" y="-28">E. Camara y electronica</text>
+    <rect class="part" x="0" y="0" width="515" height="285"/>
+    <rect class="part" x="60" y="38" width="140" height="82" rx="4"/>
+    <circle class="part" cx="130" cy="79" r="25"/>
+    <line class="thin" x1="130" y1="120" x2="130" y2="178"/>
+    <rect class="ghost" x="55" y="178" width="150" height="54"/>
+    <text class="small" x="232" y="55">Camara cenital</text>
+    <text class="small" x="232" y="84">Altura sugerida: 220-300 mm</text>
+    <text class="small" x="232" y="113">Fondo mate e iluminacion difusa</text>
+    <rect class="part" x="260" y="160" width="95" height="72" rx="4"/>
+    <rect class="part" x="380" y="150" width="100" height="92" rx="4"/>
+    <line class="thin" x1="260" y1="196" x2="205" y2="205"/>
+    <line class="thin" x1="380" y1="192" x2="355" y2="192"/>
+    <text class="tiny" x="268" y="203">Arduino</text>
+    <text class="tiny" x="388" y="202">Fuente 5V</text>
+    <text class="tiny" x="222" y="262">GND comun entre Arduino y fuente de servos</text>
+  </g>
+
+  <!-- Construction notes -->
+  <g transform="translate(1490,168)">
+    <text class="label" x="0" y="-28">Cotas y mejoras aplicadas</text>
+    <rect class="part" x="0" y="0" width="500" height="515"/>
+    <text class="text" x="26" y="45">Medidas principales</text>
+    <text class="small" x="26" y="85">Base superior: 220 x 220 mm.</text>
+    <text class="small" x="26" y="119">Disco superior: D 175-190 mm aprox.</text>
+    <text class="small" x="26" y="153">Pared del deposito: 35-45 mm.</text>
+    <text class="small" x="26" y="187">Ventana de salida: 28 x 22 mm.</text>
+    <text class="small" x="26" y="221">Paleta: 120-140 mm x 25 mm.</text>
+    <text class="small" x="26" y="255">Holgura paleta-piso: 2-4 mm.</text>
+    <text class="small" x="26" y="289">Discos apilados, no conectados en horizontal.</text>
+    <text class="text" x="26" y="342">Componentes</text>
+    <text class="small" x="26" y="382">Primer nivel: MG90S.</text>
+    <text class="small" x="26" y="416">Segundo nivel: SG90 o MG90S.</text>
+    <text class="small" x="26" y="450">Fuente servos: 5V externa, 2A o mas.</text>
+    <text class="small" x="26" y="484">Camara: vista superior de una semilla aislada.</text>
+  </g>
+</svg>

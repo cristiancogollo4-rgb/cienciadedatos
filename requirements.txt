@@ -1,0 +1,12 @@
+opencv-python
+numpy
+pillow
+matplotlib
+scikit-learn
+tensorflow==2.17.1
+seaborn
+pandas
+fastapi
+uvicorn[standard]
+python-multipart
+pyserial

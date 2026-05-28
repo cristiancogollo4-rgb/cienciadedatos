@@ -1,0 +1,30 @@
+.venv/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+*.pem
+*.key
+*.env
+*.log
+*.pid
+backend_server*.log
+backend_server.pid
+frontend_server*.log
+frontend_server.pid
+
+# Datos y artefactos pesados de entrenamiento
+dataset_frames/
+dataset_clean/
+dataset_augmented/
+hard_examples/
+validacion_internet/
+dist/
+*.mp4
+*.avi
+*.mov
+*.jpg
+*.jpeg
+*.png
+
+# Mantener solo el modelo productivo si se versiona el modelo en Git.
+models/modelo_semillas_final.keras

@@ -1,0 +1,150 @@
+{
+  "name": "Semillas - conteo y WhatsApp",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "semillas-prediction",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "f2b52a0c-fb1f-47a2-8f49-0f42e9c0aa12",
+      "name": "Webhook prediccion",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        280,
+        300
+      ],
+      "webhookId": "semillas-prediction"
+    },
+    {
+      "parameters": {
+        "jsCode": "const input = $input.first().json;\nconst event = input.body ?? input;\nconst data = $getWorkflowStaticData('global');\n\nif (!data.counts) {\n  data.counts = {\n    total: 0,\n    byCategory: {},\n    byStatus: {\n      confiable: 0,\n      dudosa: 0\n    },\n    byCategoryAndStatus: {}\n  };\n}\n\nconst category = event.prediction || 'desconocida';\nconst status = event.status || 'sin_estado';\n\ndata.counts.total += 1;\ndata.counts.byCategory[category] = (data.counts.byCategory[category] || 0) + 1;\ndata.counts.byStatus[status] = (data.counts.byStatus[status] || 0) + 1;\n\nif (!data.counts.byCategoryAndStatus[category]) {\n  data.counts.byCategoryAndStatus[category] = {};\n}\n\ndata.counts.byCategoryAndStatus[category][status] =\n  (data.counts.byCategoryAndStatus[category][status] || 0) + 1;\n\nconst confidence = Number(event.confidence || 0);\nconst margin = Number(event.margin || 0);\n\nconst message = [\n  'Informe de clasificacion de semillas',\n  '',\n  `Clase detectada: ${category}`,\n  `Estado: ${status}`,\n  `Confianza: ${(confidence * 100).toFixed(2)}%`,\n  `Margen: ${(margin * 100).toFixed(2)}%`,\n  `Origen: ${event.source_type || 'app'}`,\n  event.filename ? `Archivo: ${event.filename}` : null,\n  '',\n  'Conteo acumulado',\n  `Total: ${data.counts.total}`,\n  `Arroz: ${data.counts.byCategory.arroz || 0}`,\n  `Frijol: ${data.counts.byCategory.frijol || 0}`,\n  `Arbejas: ${data.counts.byCategory.arbejas || 0}`,\n  `Maiz pira: ${data.counts.byCategory.maiz_pira || 0}`,\n  '',\n  'Resumen por estado',\n  `Confiables: ${data.counts.byStatus.confiable || 0}`,\n  `Dudosas: ${data.counts.byStatus.dudosa || 0}`,\n  '',\n  `Fecha servidor: ${event.server_timestamp || new Date().toISOString()}`\n].filter(Boolean).join('\\n');\n\nreturn [\n  {\n    json: {\n      ...event,\n      counts: data.counts,\n      whatsapp_message: message\n    }\n  }\n];"
+      },
+      "id": "e748c1dc-1e4f-43a4-99cd-fd3560a72a44",
+      "name": "Contar semillas",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        520,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { ok: true, prediction: $json.prediction, status: $json.status, counts: $json.counts, whatsapp_message: $json.whatsapp_message } }}",
+        "options": {}
+      },
+      "id": "b2877286-738a-4604-b893-7ec9ef305088",
+      "name": "Responder a la app",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        800,
+        180
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const event = $input.first().json;\nconst recipients = [\n  '573160567337',\n  '573187950586'\n];\n\nreturn recipients.map((phone) => ({\n  json: {\n    ...event,\n    whatsapp_to: phone\n  }\n}));"
+      },
+      "id": "8ff059a9-5f83-4762-9575-39e15154b71d",
+      "name": "Preparar destinatarios",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        800,
+        430
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://graph.facebook.com/v20.0/TU_PHONE_NUMBER_ID/messages",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer TU_ACCESS_TOKEN"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ {\n  messaging_product: 'whatsapp',\n  to: $json.whatsapp_to,\n  type: 'text',\n  text: {\n    preview_url: false,\n    body: $json.whatsapp_message\n  }\n} }}",
+        "options": {}
+      },
+      "id": "3b7bb0ef-cfe7-4653-b85b-f9af00a85c33",
+      "name": "Enviar WhatsApp",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1060,
+        430
+      ],
+      "notes": "Reemplaza TU_PHONE_NUMBER_ID y TU_ACCESS_TOKEN con los datos de Meta WhatsApp Cloud API antes de publicar."
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook prediccion": {
+      "main": [
+        [
+          {
+            "node": "Contar semillas",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Contar semillas": {
+      "main": [
+        [
+          {
+            "node": "Responder a la app",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Preparar destinatarios",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Preparar destinatarios": {
+      "main": [
+        [
+          {
+            "node": "Enviar WhatsApp",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "saveExecutionProgress": true,
+    "saveManualExecutions": true,
+    "saveDataSuccessExecution": "all",
+    "saveDataErrorExecution": "all"
+  },
+  "versionId": "3ce72f9b-7960-4d62-9e9e-18e064c2e389",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "id": "semillas-whatsapp-demo",
+  "tags": []
+}

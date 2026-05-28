@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Clasificador de semillas</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Sistema IA</p>
+          <h1>Clasificador de semillas</h1>
+        </div>
+        <div class="api-box">
+          <label for="apiBase">API</label>
+          <input id="apiBase" type="url" data-local-default="http://127.0.0.1:8010" />
+          <span id="apiStatus" class="status-dot" title="Estado API"></span>
+        </div>
+      </header>
+
+      <main class="workspace">
+        <section class="input-panel">
+          <div class="mode-tabs" role="tablist" aria-label="Modo de entrada">
+            <button class="mode-button active" data-mode="image" type="button">Imagen</button>
+            <button class="mode-button" data-mode="webcam" type="button">Camara</button>
+            <button class="mode-button" data-mode="video" type="button">Video</button>
+            <button class="mode-button" data-mode="url" type="button">URL</button>
+          </div>
+
+          <div class="mode-section active" id="mode-image">
+            <label class="file-drop" for="imageInput">
+              <span>Subir imagen</span>
+              <input id="imageInput" type="file" accept="image/*" />
+            </label>
+            <button id="predictImageButton" class="primary-button" type="button" disabled>Predecir imagen</button>
+          </div>
+
+          <div class="mode-section" id="mode-webcam">
+            <div class="camera-row">
+              <select id="cameraSelect" aria-label="Camara">
+                <option value="">Camara trasera</option>
+              </select>
+              <button id="refreshCamerasButton" type="button">Actualizar</button>
+              <button id="switchCameraButton" type="button">Cambiar</button>
+            </div>
+            <div class="button-row">
+              <button id="startCameraButton" type="button">Iniciar camara</button>
+              <button id="stopCameraButton" type="button" disabled>Detener</button>
+              <button id="captureCameraButton" class="primary-button" type="button" disabled>Capturar</button>
+              <button id="liveCameraButton" type="button" disabled>Tiempo real</button>
+            </div>
+          </div>
+
+          <div class="mode-section" id="mode-video">
+            <label class="file-drop" for="videoInput">
+              <span>Subir video</span>
+              <input id="videoInput" type="file" accept="video/*" />
+            </label>
+            <div class="button-row">
+              <button id="captureVideoButton" class="primary-button" type="button" disabled>Predecir frame</button>
+            </div>
+          </div>
+
+          <div class="mode-section" id="mode-url">
+            <div class="url-row">
+              <input id="urlInput" type="url" placeholder="https://..." />
+              <select id="urlType">
+                <option value="auto">Auto</option>
+                <option value="image">Imagen</option>
+                <option value="video">Video</option>
+              </select>
+            </div>
+            <button id="predictUrlButton" class="primary-button" type="button">Predecir URL</button>
+          </div>
+
+          <div class="preview-stage">
+            <img id="imagePreview" alt="Vista previa" hidden />
+            <video id="videoPreview" playsinline controls hidden></video>
+            <video id="cameraPreview" playsinline autoplay muted hidden></video>
+            <div id="emptyPreview" class="empty-preview">Vista previa</div>
+          </div>
+
+          <canvas id="frameCanvas" width="224" height="224" hidden></canvas>
+          <p id="message" class="message" role="status"></p>
+        </section>
+
+        <section class="result-panel">
+          <div class="result-header">
+            <div>
+              <p class="eyebrow">Resultado</p>
+              <h2 id="predictionLabel">Sin prediccion</h2>
+            </div>
+            <span id="statusBadge" class="badge">pendiente</span>
+          </div>
+
+          <div class="metric-grid">
+            <div>
+              <span>Confianza</span>
+              <strong id="confidenceValue">0.00%</strong>
+            </div>
+            <div>
+              <span>Margen</span>
+              <strong id="marginValue">0.00%</strong>
+            </div>
+          </div>
+
+          <div id="probabilities" class="probabilities"></div>
+
+          <div class="threshold-panel">
+            <div class="threshold-header">
+              <p class="eyebrow">Criterio confiable</p>
+              <button id="setThresholdsButton" type="button">Aplicar</button>
+            </div>
+            <div class="threshold-controls">
+              <label for="minConfidence">Confianza minima</label>
+              <input id="minConfidence" type="number" min="0" max="1" step="0.01" value="0.70" />
+              <label for="minMargin">Margen minimo</label>
+              <input id="minMargin" type="number" min="0" max="1" step="0.01" value="0.20" />
+            </div>
+          </div>
+
+          <div class="iot-panel">
+            <div class="iot-header">
+              <p class="eyebrow">Arduino USB local</p>
+              <span id="iotStatus" class="status-dot" title="Estado Arduino"></span>
+            </div>
+            <div class="iot-controls">
+              <input id="iotPort" type="text" value="USB navegador" readonly />
+              <button id="connectIotButton" type="button">Seleccionar</button>
+              <button id="disconnectIotButton" type="button">Desconectar</button>
+            </div>
+            <div class="servo-speed-controls">
+              <label for="sg90Speed">SG90 ms/grado</label>
+              <input id="sg90Speed" type="number" min="1" max="40" step="1" value="8" />
+              <button id="setSg90SpeedButton" type="button">Aplicar</button>
+            </div>
+            <p id="iotMessage" class="iot-message">Sin conexion</p>
+          </div>
+
+          <div class="tracking-header">
+            <p class="eyebrow">Seguimiento en vivo</p>
+            <button id="resetTrackingButton" type="button">Reiniciar conteo</button>
+          </div>
+          <div id="trackingCounts" class="tracking-counts"></div>
+          <div id="trackingEvents" class="tracking-events"></div>
+
+          <div class="history-header">
+            <p class="eyebrow">Historial</p>
+            <button id="clearHistoryButton" type="button">Limpiar</button>
+          </div>
+          <div id="historyList" class="history-list"></div>
+        </section>
+      </main>
+    </div>
+
+    <script src="./config.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>
