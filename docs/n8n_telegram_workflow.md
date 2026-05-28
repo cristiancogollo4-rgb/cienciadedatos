@@ -40,8 +40,22 @@ Para un grupo:
 
 1. Crear un grupo de Telegram.
 2. Agregar el bot al grupo.
-3. Escribir un mensaje en el grupo mencionando o usando el bot.
+3. Escribir un mensaje en el grupo mencionando o usando el bot, por ejemplo `/start @nombre_del_bot`.
 4. Abrir `getUpdates` y copiar el `chat.id` del grupo.
+
+El `chat_id` de un grupo normalmente es negativo. En supergrupos suele tener esta forma:
+
+```text
+-1001234567890
+```
+
+Si `getUpdates` no muestra mensajes del grupo, desactivar la privacidad del bot en BotFather:
+
+```text
+/setprivacy
+```
+
+Seleccionar el bot y elegir `Disable`. Luego enviar otro mensaje en el grupo y volver a abrir `getUpdates`.
 
 ## 3. Importar plantilla n8n
 
@@ -63,11 +77,10 @@ Contar semillas -> Preparar chats Telegram -> Enviar Telegram
 En el nodo `Preparar chats Telegram`, reemplazar:
 
 ```text
-TU_CHAT_ID_1
-TU_CHAT_ID_2
+TU_GROUP_CHAT_ID
 ```
 
-por los chat IDs reales.
+por el `chat_id` real del grupo.
 
 En el nodo `Enviar Telegram`, reemplazar en la URL:
 

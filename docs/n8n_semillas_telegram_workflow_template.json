@@ -48,7 +48,7 @@
     },
     {
       "parameters": {
-        "jsCode": "const event = $input.first().json;\nconst chatIds = [\n  '6826962461'\n].filter((chatId) => !chatId.startsWith('TU_'));\n\nreturn chatIds.map((chatId) => ({\n  json: {\n    ...event,\n    telegram_chat_id: chatId\n  }\n}));"
+        "jsCode": "const event = $input.first().json;\nconst chatIds = [\n  'TU_GROUP_CHAT_ID'\n].filter((chatId) => !chatId.startsWith('TU_'));\n\nreturn chatIds.map((chatId) => ({\n  json: {\n    ...event,\n    telegram_chat_id: chatId\n  }\n}));"
       },
       "id": "8ff059a9-5f83-4762-9575-39e15154b71d",
       "name": "Preparar chats Telegram",

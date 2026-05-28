@@ -490,22 +490,25 @@ Se creo el bot:
 https://t.me/Clasificador_semillas_unab_bot
 ```
 
-Para obtener un `chat_id`:
+Para enviar los informes a un grupo de Telegram:
 
-1. abrir el bot,
-2. escribir `/start`,
-3. escribir un mensaje,
-4. consultar:
+1. agregar el bot al grupo,
+2. escribir un mensaje en el grupo mencionando o usando el bot, por ejemplo `/start @Clasificador_semillas_unab_bot`,
+3. consultar:
 
 ```text
 https://api.telegram.org/botTU_TOKEN/getUpdates
 ```
 
-El `chat_id` usado en pruebas fue:
+4. copiar el `chat.id` del grupo y pegarlo en el nodo `Preparar chats Telegram`, reemplazando `TU_GROUP_CHAT_ID`.
+
+El `chat_id` de un grupo normalmente es negativo. En supergrupos suele verse asi:
 
 ```text
-6826962461
+-1001234567890
 ```
+
+Si el grupo no aparece en `getUpdates`, abrir BotFather, usar `/setprivacy`, seleccionar el bot y elegir `Disable`. Despues enviar otro mensaje en el grupo y consultar `getUpdates` otra vez.
 
 El token del bot no debe guardarse en el repositorio. En n8n se configura en el nodo `Enviar Telegram`, reemplazando:
 
