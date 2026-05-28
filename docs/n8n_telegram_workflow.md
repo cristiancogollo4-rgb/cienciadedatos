@@ -82,6 +82,28 @@ TU_GROUP_CHAT_ID
 
 por el `chat_id` real del grupo.
 
+Para la demo del grupo `Ciencias de datos`, el valor configurado es:
+
+```text
+-4990473268
+```
+
+El nodo debe quedar asi:
+
+```javascript
+const event = $input.first().json;
+const chatIds = [
+  '-4990473268'
+].filter((chatId) => !chatId.startsWith('TU_'));
+
+return chatIds.map((chatId) => ({
+  json: {
+    ...event,
+    telegram_chat_id: chatId
+  }
+}));
+```
+
 En el nodo `Enviar Telegram`, reemplazar en la URL:
 
 ```text

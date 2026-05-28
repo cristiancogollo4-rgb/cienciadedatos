@@ -26,6 +26,7 @@ dist/
 *.jpg
 *.jpeg
 *.png
+!docs/telegram_grupo_qr.png
 
 # Mantener solo el modelo productivo si se versiona el modelo en Git.
 models/modelo_semillas_final.keras

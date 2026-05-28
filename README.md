@@ -502,6 +502,33 @@ https://api.telegram.org/botTU_TOKEN/getUpdates
 
 4. copiar el `chat.id` del grupo y pegarlo en el nodo `Preparar chats Telegram`, reemplazando `TU_GROUP_CHAT_ID`.
 
+Grupo configurado para la demo:
+
+```text
+Nombre: Ciencias de datos
+chat_id: -4990473268
+```
+
+Codigo del nodo `Preparar chats Telegram`:
+
+```javascript
+const event = $input.first().json;
+const chatIds = [
+  '-4990473268'
+].filter((chatId) => !chatId.startsWith('TU_'));
+
+return chatIds.map((chatId) => ({
+  json: {
+    ...event,
+    telegram_chat_id: chatId
+  }
+}));
+```
+
+QR del grupo:
+
+![QR del grupo Ciencias de datos](docs/telegram_grupo_qr.png)
+
 El `chat_id` de un grupo normalmente es negativo. En supergrupos suele verse asi:
 
 ```text
